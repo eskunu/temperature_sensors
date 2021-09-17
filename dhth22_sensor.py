@@ -46,7 +46,6 @@ to = to_number
 
 def sensor(): # inputs are the sleep timer in seconds as <int>
 	try:
-		tm = time.strftime('%Y-%m-%d %H:%M:%S', localtime())
 		h,t = dht.read_retry(dht.DHT22, 4)
 		c = t	# Save to celsius
 		f = t * 9 / 5 + 32	# Save to farhenheit
@@ -62,23 +61,23 @@ def write_file(file, lat, lon):
 	m = 0
 	with file as f:
 		while True:
-			fh, c, h = sensor()
-			tm = time.strftime('%Y-%m-%d %H:%M:%S', localtime())
-			data = {'sensor':{'time': tm, 'celsius': c, 'farhenheit':fh, 'humidity':h}}
-			if m == 0 or m % 60 == 0:
-				w = weather(lat, lon)
-				data['weather'] = w
-			jsline = json.dumps(data)
-			f.write(jsline)
-			f.write('\n')
-			f.flush()
-			time.sleep(60)
-			m += 1 # minutes (approximate)
-
+			try:
+				fh, c, h = sensor()
+				tm = time.strftime('%Y-%m-%d %H:%M:%S', localtime())
+				data = {'sensor':{'time': tm, 'celsius': c, 'farhenheit':fh, 'humidity':h}}
+				if m == 0 or m % 60 == 0:
+					w = weather(lat, lon)
+					data['weather'] = w
+				jsline = json.dumps(data)
+				f.write(jsline)
+				f.write('\n')
+				f.flush()
+				time.sleep(60)
+				m += 1 # minutes (approximate)
+			except:
+				pass
 file = open('temperature.json', 'w')
 lat = '39.006699'
 lon = '-77.429131'
 
 write_file(file, lat, lon)
-# x = weather(lat, lon)
-# y = twilio(jskey, str(x), '+18172969597')
