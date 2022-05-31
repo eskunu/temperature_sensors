@@ -1,11 +1,12 @@
 # Python 3.7
+from msilib.schema import Error
 import Adafruit_DHT as dht
 import time
 import json
 from time import localtime
 # import pyowm
 import requests
-from twilio.rest import Client
+# from twilio.rest import Client
 
 
 with open('config.txt') as c:
@@ -74,8 +75,8 @@ def write_file(file, lat, lon):
 				f.flush()
 				time.sleep(60)
 				m += 1 # minutes (approximate)
-			except:
-				pass
+			except Error as e:
+				print(e)
 file = open('temperature.json', 'w')
 lat = '39.006699'
 lon = '-77.429131'
