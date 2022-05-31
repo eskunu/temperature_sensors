@@ -1,5 +1,4 @@
 # Python 3.7
-from msilib.schema import Error
 import Adafruit_DHT as dht
 import time
 import json
