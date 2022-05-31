@@ -75,7 +75,7 @@ def write_file(file, lat, lon):
 				f.flush()
 				time.sleep(60)
 				m += 1 # minutes (approximate)
-			except Error as e:
+			except Exception as e:
 				print(e)
 file = open('temperature.json', 'w')
 lat = '39.006699'
