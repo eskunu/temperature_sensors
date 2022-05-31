@@ -53,8 +53,8 @@ def sensor(): # inputs are the sleep timer in seconds as <int>
 		c = '{0:0.1f}'.format(c)
 		h = '{0:0.1f}'.format(h)
 		# time.sleep(sleep_timer)	# The sensor can only be polled every 2 seconds.
-	except:
-		pass
+	except Exception as e:
+		print(e)
 	return f, c, h
 
 def write_file(file, lat, lon):
@@ -76,7 +76,7 @@ def write_file(file, lat, lon):
 				m += 1 # minutes (approximate)
 			except Exception as e:
 				print(e)
-file = open('temperature.json', 'w')
+file = open('temperature_screen.json', 'w')
 lat = '39.006699'
 lon = '-77.429131'
 
